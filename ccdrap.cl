@@ -51,7 +51,7 @@ string temp0, temp1, temp2, temp3, temp4, temp5, temp6, tempshift, aa, linedata,
 string fname, fname2, fname3, fname4
 struct line1, line2
 string diret, raiz, lista
-string lixo1
+string lixo1, lamina
 string imagem, fileord, fileout, filetemp, imname, filecounts
 string zeroi, flati
 string arq, arqim
@@ -134,6 +134,14 @@ if (modo == 2) {
 
   workingimage=substr(imagem,1,(strlen(imagem)-5))
 
+  imgets(workingimage, "LAMINA")
+  lamina = imgets.value
+#  print("lamina "//lamina)
+  if(lamina != "L0" && lamina != "0"){
+    print("ERROR: the first WP position for "//root//"_*.fits is not the position L0!\nVerify and try again.")
+    error(1,1)
+  }
+  
   print ("# Registering images in "//workingimage)
   print ("# Extracting 2D Fits files from 3D File")
 
