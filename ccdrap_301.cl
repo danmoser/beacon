@@ -22,6 +22,7 @@ string  dark = ""      {prompt="Dark Count calibration image"}
 string  flat = ""      {prompt="Flat field images"}
 real    readnoise = 2.12    {prompt="CCD readnoise (adu)"}
 real    ganho = 4.      {prompt="CCD gain (e/adu)"}
+int     frame=1            {prompt="Frame number to open on DS9"}
 int     nap = 10         {prompt="phot: number of apertures (maximum 10)"}
 string  apertures = "5:14:1" {prompt="phot: List of aperture radii in pixels"}
 real    annulus = 30.      {prompt="phot: Inner radius of sky annulus in scale units"}
@@ -252,7 +253,7 @@ chdir("..")
 	print"# Running DISPLAY ...")
 	print("")
 	
-	display(image=temp0,frame=1)
+	display(image=temp0,frame=frame)
 	
 	sleep 1
 	
@@ -281,9 +282,9 @@ chdir("..")
 		print("Running TVMARK ...")
 		print("")
 		
-		display(image=temp0,frame=1)
+		display(image=temp0,frame=frame)
 		
-		tvmark(1,temp1,label=no,number=yes,radii=15,color=202)
+		tvmark(frame,temp1,label=no,number=yes,radii=15,color=202)
 		
 		print("")
 		print("# Is it correct(yes|no)?")
@@ -488,7 +489,7 @@ chdir("..")
 			
 #				   delete(temp1, ver-, >& "dev$null")
 #$   	
-				   display(image=imagem,frame=1)
+				   display(image=imagem,frame=frame)
 				   sleep 1
 				   
 				   print("")
@@ -514,14 +515,14 @@ chdir("..")
 				   
 				   } else {
 				   		uselast = no
-						display(image=imagem,frame=1)
+						display(image=imagem,frame=frame)
 				   }
 				   
 				   print("")
 				   print("Running TVMARK ...")
 				   print("")
 				   				   
-				   tvmark(1,temp2,label=no,number=yes,radii=15,color=202)
+				   tvmark(frame,temp2,label=no,number=yes,radii=15,color=202)
 				   
 				   print("")
 				   print("# Is it correct(yes|no)?")
@@ -578,12 +579,12 @@ chdir("..")
 #$				
 				copy("ccdrapcoord.ord","../coordtmp.ord", ver-, >& "dev$null")
 #$
-				display(image=imagem,frame=1)
+				display(image=imagem,frame=frame)
 				print("")
 				print("Running TVMARK ...")
 				print("")
 				   				   
-				tvmark(1,"../coordtmp.ord",label=no,number=yes,radii=15,color=202)
+				tvmark(frame,"../coordtmp.ord",label=no,number=yes,radii=15,color=202)
 			} else {	
 				print "# Automatically finding star coordinates with daofind..."
 		
@@ -741,8 +742,8 @@ chdir("..")
 # BEDNARSKI 01-08-2011: Copiei isso abaixo do ccdrap do ikon/ixon
 			if(j == 1 && intera == no) {
 				print("# Displaying first image of the series ...")
-				display(image=imagem,frame=1)
-				tvmark(1,temp5,label=no,number=yes,radii=15,color=202)
+				display(image=imagem,frame=frame)
+				tvmark(frame,temp5,label=no,number=yes,radii=15,color=202)
 				sleep 1
 			}
 			

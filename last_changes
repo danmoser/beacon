@@ -2,6 +2,12 @@ Pacote IRAF Beacon
 Log das modificações das tarefas
 
 
+ver 2.1.3, Bednarski
+
+1. ccdrap_301.cl: adicionado o mesmo parâmetro 'frame' que fora adicionado já para o ccdrap.cl na versão 2.1.0.
+
+
+
 
 ver 2.1.2, Bednarski
 
@@ -28,7 +34,7 @@ ver 2.1.1, Bednarski
 
 
 
-ver 2.1, Bednarski
+ver 2.1.0, Bednarski
 
 1. reduce.cl: verifica se os ganhos (pre-amp) no cabeçalho das séries são iguais aos do cabeçalho das calibrações que serão utilizadas.
 
