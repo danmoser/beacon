@@ -67,3 +67,7 @@
   7.1. jun2015: Reescrevi o grafpol para usar como base a tarefa pyhdust.poltools.grafpol.
   7.2. jun2015: Aceita dois parâmetros de entrada (OPCIONAIS): 1) o caminho para o diretório onde estão os .log a serem plotados (se não determinado, supões '.'); 2) o sufixo dos .log iniciado com o caractere '_' (se não determinado, vai gerar o gráfico para todos sufixos).
   
+8. reduce_spec.cl (Moser)
+
+  8.1. mar2016: Resize=no
+
