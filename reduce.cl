@@ -136,7 +136,7 @@ for (i = 1; i < 6; i=i+1) {
   bin = imgets.value
   imgets(fname, "SERNO")
   serno = imgets.value
-  if(serno == "4335"){
+  if(serno == "4335" || serno == "4269"){
     ccd = "iXon"
     imgets(fname, "OUTPTAMP")
     outamp = imgets.value
@@ -149,7 +149,7 @@ for (i = 1; i < 6; i=i+1) {
     ccd = "iKon 9867"
     outamp = "Conventional"
   }
-  if(serno != "9867" && serno != "10127" && serno != "4335"){
+  if(serno != "9867" && serno != "10127" && serno != "4335" && serno != "4269"){
     ccd = "Unknown (Serial No. "//serno//")"
     outamp = "Unknown"
   }

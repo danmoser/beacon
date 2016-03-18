@@ -30,6 +30,7 @@ real    dannulus = 10.      {prompt="phot: Width of sky annulus in scale units"}
 real boxsize=7 {prompt="Imalign: Size of the small centering box"}
 real bigbox=11 {prompt="Imalign: Size of the big centering box"}
 int	reject=30000 {prompt="Reject images with pixel values larger than this value"}
+int     minreject=600 {prompt="Reject images with pixel values smaller than this value"}
 real exptime=0.   {prompt="SWAP: correct exposure time"}
 #string  subdir = "temp"      {prompt="sub-directory to create for temporary files"}
 string fileexe ="/iraf/extern/beacon/pccd/ccdrap_e.e" {prompt="CCDRAP executable file"}
@@ -158,12 +159,40 @@ if(swap) {
 
 delete("TEMP_1.txt", ver-, >& "dev$null")
 
+fname=mktemp("listaAAA")
+files("p*.fits", > fname)
+flist2 = fname
+
+
+while(fscan(flist2, arqim) != EOF) {
+
+        imstatistics(images = arqim, fields = "max", lower = INDEF, upper = INDEF, 
+                         binwidth = 0, format = no, > "TEMP"//arqim//".txt")
+        flist1 = "TEMP"//arqim//".txt"
+        lixo1 = fscan(flist1, maxdata)
+#			print("Count to ", arqim, ": ", maxdata)
+        delete("TEMP"//arqim//".txt", ver-, >& "dev$null")
+#$
+        if(maxdata > reject || maxdata < minreject){
+                imdel(images=arqim,go_ahead=yes, verify=no, >& "dev$null")
+#$
+#                        print "# WARNING! Image:"
+#                        print(arqim, ".fits")
+#                        print("has pixel values out of bounds: ", maxdata)
+#                        print "Deleting the corresponding CCDPROC image. "
+        }
+}
+delete(fname, ver-, >& "dev$null")
+
+
+
 if(overscan || zerocor ||  darkcor || flatcor || trim) {
 	print "# Running ccdproc..."
 	imdel(images="cp*.fits",go_ahead=yes, verify=no, >& "dev$null")
 
         fname=mktemp("lista")
         files("p*.fits", > fname)
+
 	ccdproc(images="@"//fname,output="c//@"//fname,ccdtype = "",
 			   noproc=no,fixpix=no,overscan=overscan,trim=trimi,
 			   zerocor=zerocor,darkcor=darkcor,flatcor=flatcor,illumcor=no,
@@ -435,11 +464,11 @@ chdir("..")
 #			print("Count to ", arqim, ": ", maxdata)
 			delete("TEMP"//arqim//".txt", ver-, >& "dev$null")
 #$
-			if(maxdata > reject) {
-				imdel(images="c"//arqim//".fits",go_ahead=yes, verify=no, >& "dev$null")
+			if(maxdata > reject || maxdata < minreject){
+				imdel(images=arqim,go_ahead=yes, verify=no, >& "dev$null")
 #$
 				print "# WARNING! Image:"
-				print(arqim, ".fits")
+				print(arqim)
 				print("has pixel values out of bounds: ", maxdata)
 				print "Deleting the corresponding CCDPROC image. "
 			}

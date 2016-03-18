@@ -15,6 +15,7 @@ bool    trim = yes 	{prompt="Trim the images?"}
 bool    texpcor = yes   {prompt="Check the *real* integration time?"}
 real    tol = 2.        {prompt="Exptime error tolerance (%)"}
 bool    headcor = no 	{prompt="Reset exptime values in headers?"}
+string  zeroadr = "" 	{prompt="TEMP for bias. If none, bias is not used"}
 string  trimsec = "301s" {prompt="Trim data section"}
 string  texpimg = "uu.u bb.b vv.v rr.r ii.i" 	{prompt="Real images exptimes (*00.0* to use header value)"}
 struct *flist1
@@ -166,7 +167,10 @@ for(i = 1; i < 6; i=i+1) {
 
 # Run ccdrap_301 and polrap
   if(ccdrap_301.flatcor || ccdrap_301.darkcor) {
-    ccdrap_301(version=".2")
+    if(zeroadr=="" || zeroadr==" " || zeroadr=="  ")
+      ccdrap_301(version=".2")
+    else
+      ccdrap_301(version=".2",zerocor=yes,zero=zeroadr)
 
     if(n<=16)
       polrap(n=n)

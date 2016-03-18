@@ -577,7 +577,7 @@ while (fscan(flist2, arqim) != EOF) {
 	
     # Search for first image
     lista=mktemp("lista")
-    files("c*.fits", > lista)
+    files("ccdp_*.fits", > lista)
     flist3=lista
     lixo1 = fscan(flist3, imagem)
     if(fscan(flist3, lixo1) == EOF){
@@ -727,7 +727,7 @@ while (fscan(flist2, arqim) != EOF) {
     if (access("shifts")) {
 
       fname4=mktemp("lista")
-      files("c*.fits", > fname4)    
+      files("ccdp_*.fits", > fname4)    
 
       print ("# Using 'shifts' file present in the folder...")
       imalign(input="@"//fname4,reference=temp0,
@@ -736,7 +736,7 @@ while (fscan(flist2, arqim) != EOF) {
     } else {
 
       fname4=mktemp("lista")
-      files("c*.fits", > fname4)  
+      files("ccdp_*.fits", > fname4)  
       imalign(input="@"//fname4, reference=temp0,
               coords=tempcoord, output="sh//@"//fname4, shifts="",
               boxsize=boxsize, bigbox=bigbox, trimimages=no, shiftimages=yes)
