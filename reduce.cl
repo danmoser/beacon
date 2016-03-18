@@ -14,8 +14,8 @@ bool  dograph=no    {prompt="Generate all .png graphs?"}
 real ganho="INDEF"   {prompt="(obsolete) CCD gain to be used if head=no (e/adu)"}
 real readno="INDEF"  {prompt="(obsolete) ReadNoise (ADUs) to be used if head=no (adu)"}
 int	reject=0     {prompt="Reject images with counts larger than this value (0 to use value from ccdrap)"}
-string pccdpath="/iraf/iraf-2.16.1/extern/beacon/pccd/" {prompt="Path to .e pccd files (blank to use values from ccdrap/pccdgen)"}
-string graphpol="/iraf/iraf-2.16.1/extern/beacon/grafpol.py"   {prompt="Path to the grafpol.py code"}
+string pccdpath="iraf$extern/beacon/pccd/" {prompt="Path to .e pccd files (blank to use values from ccdrap/pccdgen)"}
+string graphpol="iraf$extern/beacon/grafpol.py"   {prompt="Path to the grafpol.py code"}
 
 struct *fstruct
 

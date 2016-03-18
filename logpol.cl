@@ -1,12 +1,12 @@
 #
-# Ver 1.0, 14out16
+# Ver 1.0, 2014out16
 #
 # Bednarski
 #
 procedure logpol
 
 
-string stand="/iraf/iraf-2.16.1/extern/beacon/std_published.dat"   {prompt="File list of standards"}
+string stand="iraf$extern/beacon/std_published.dat"   {prompt="File list of standards"}
 struct *fstruct
 struct *sstruct
 

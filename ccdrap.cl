@@ -32,8 +32,8 @@ real    boxsize=7          {prompt="Imalign: Size of the small centering box"}
 real    bigbox=11          {prompt="Imalign: Size of the big centering box"}
 int	    reject=63000       {prompt="Reject images with pixel values larger than this value"}
 bool    stack1st=no        {prompt="Attempt to automatically stack 1st WP position?"}
-string  fileexe="/iraf/iraf-2.16.1/extern/beacon/pccd/ccdrap_e.e"  {prompt="CCDRAP executable file"}
-string  icom="/iraf/iraf-2.16.1/extern/beacon/pccd/icom.sh"  {prompt="Script for icommands of daoedit"}
+string  fileexe="iraf$extern/beacon/pccd/ccdrap_e.e"  {prompt="CCDRAP executable file"}
+string  icom="iraf$extern/beacon/pccd/icom.sh"  {prompt="Script for icommands of daoedit"}
 
 struct *flist1
 struct *flist2
