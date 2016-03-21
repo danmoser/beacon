@@ -33,7 +33,8 @@ int	reject=30000 {prompt="Reject images with pixel values larger than this value
 int     minreject=600 {prompt="Reject images with pixel values smaller than this value"}
 real exptime=0.   {prompt="SWAP: correct exposure time"}
 #string  subdir = "temp"      {prompt="sub-directory to create for temporary files"}
-string fileexe ="/iraf/extern/beacon/pccd/ccdrap_e.e" {prompt="CCDRAP executable file"}
+string fileexe ="iraf$extern/beacon/pccd/ccdrap_e.e" {prompt="CCDRAP executable file"}
+string irafpath = "iraf$" {prompt="IRAF path (try full path)"}
 
 #string  imgref = ""      {prompt="Input reference image"}
 #string  images = ""      {prompt="Input images to align"}
@@ -153,7 +154,7 @@ if(swap) {
 	del(files="pp*,hp*",go_ahead=yes, verify=no, >& "dev$null")
 
 # Run suape script for each p* and generate p*.fits
-	!/iraf/iraf-2.16.1/extern/beacon/suape "p*"
+	!suape "p*"
 
 }
 

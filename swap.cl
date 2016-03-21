@@ -5,6 +5,7 @@
 procedure swap(files)
 
 string     files = "*" {prompt="Input files"}
+string  irafpath = "iraf$" {prompt="IRAF path (try full path)"}
 bool		 tcheck= yes {prompt="Check the *real* integration time?"}
 real      exptime=0.   {prompt="Optional exptime, keep it 0. if not to be used"}
 real          tol=0.5   {prompt="Exptime error tolerance (%)"}
@@ -28,7 +29,7 @@ del (files=filei//"0000",go_ahead=yes, verify=no, >& "dev$null")
 
 imdel (images=filei//".fits",go_ahead=yes, verify=no, >& "dev$null")
 
-print ("/iraf/iraf-2.16.1/extern/beacon/suape"," \"",filei,"\"", >> "roda")
+print (irafpath//"/extern/beacon/suape"," \"",filei,"\"", >> "roda")
 #$
 
 !source roda

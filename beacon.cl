@@ -83,7 +83,7 @@ task     pospars          = "beacon$pospars.par"
 task     reduce_mus = "beacon$reduce_mus.cl"
 task     calib_mus  = "beacon$calib_mus.cl"
 task     tests       = "beacon$tests.cl"
-task     logpol          = "beacon$logpol.cl"
+task     pollog          = "beacon$pollog.cl"
 
 
 type beacon$welcome

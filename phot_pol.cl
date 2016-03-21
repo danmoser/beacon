@@ -16,6 +16,7 @@ int       star_out    {min=0, prompt="Estrela que nao eh incluida na soma dos fl
 string    file_in     {prompt="Arquivo com saida txdump"}
 string    file_out    {prompt="Nome archivo de saida"}
 real	  ganho	      {prompt="Ganho - e/adu"}
+string    irafpath = "iraf$" {prompt="IRAF path (try full path)"}
 
 begin 
 
@@ -32,7 +33,7 @@ if (access(out)) delete (out,ver-)
 file2 = "roda"
 if (access(file2)) delete(file2,ver-)
 
-print ("/iraf/extern/pccdpack/pccd/phot_pol_e.e"," ",in," ", out," ", nstars," ", nhw," ", nap," ", star," ", star_out," ",ganho, >> file2)
+print (irafpath//"/extern/pccdpack/pccd/phot_pol_e.e"," ",in," ", out," ", nstars," ", nhw," ", nap," ", star," ", star_out," ",ganho, >> file2)
 
 !source roda
 

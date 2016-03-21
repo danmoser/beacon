@@ -1,0 +1,129 @@
+Pacote IRAF Beacon-reduc
+############################
+Log das modificações das tarefas
+==================================
+
+ver 2.1.4, Moser
+-----------------
+1. Todos os caminhos que apontavam para `/iraf/iraf-v2.16/` foram substituídos por `iraf$`
+
+2. Tudo relacionado com espectroscopia foi atualizado. 
+
+3. Estrutura subpastas: 
+  
+  a. 'lamps' contém informações sobre as lâmpadas ECASS e MUSICOS
+  b.  'scripts' contém executáveis Python e shell
+
+4. Rotina `logpol` renomeada para `pollog`. Isto porque a rotina indepedia digitar `log` para sair do ambiente IRAF. 
+
+
+ver 2.1.3, Bednarski
+---------------------------
+1. ccdrap_301.cl: adicionado o mesmo parâmetro 'frame' que fora adicionado já para o ccdrap.cl na versão 2.1.0.
+
+
+ver 2.1.2, Bednarski
+---------------------------
+1. ccdrap.cl: adicionado o parâmetro boleano "ver1stwp", que pergunta ao usuário se ele quer verificar se a primeira posição de lâmina está registrada como L0 no cabeçalho.
+
+2. reduce.cl:  
+
+  a. adicionado o mesmo parâmetro "ver1stwp" para setar diretamente esse parâmetro no ccdrap.
+  b. agora verifica se o parâmetro reject é MENOR que o limite pré-estabelecido através das configurações dos headers.
+
+
+ver 2.1.1, Bednarski
+---------------------------
+1. suape: consertado, com o parâmetro "convert=ascii" retirado, pois estava causando bugs.
+
+2. calib_301.cl: adicionei "add=yes" na chamado do hedit para editar o parâmetro DARKTIME, pois se este campo já não existia, não estava sendo criado automaticamente!
+
+3. ccdrap_301.cl: vários bugs corrigidos.
+
+4. reduce_301.cl: agrupa 8 posições de lâmina também, como a tarefa "reduce.cl".
+
+5. jdrap.cl: swap chamado com tcheck=no para evitar bugs.
+
+
+ver 2.1.0, Bednarski
+---------------------------
+1. reduce.cl: verifica se os ganhos (pre-amp) no cabeçalho das séries são iguais aos do cabeçalho das calibrações que serão utilizadas.
+
+2. ccdrap.cl: 
+
+  a. verifica se a primeira posição de lâmina da série é de fato a L0.
+  b. acrescentei parâmetro "frame" sobre em qual frame mostrar as imagens no DS9. Isso é útil para reduções em paralelo (com dois terminais cl abertos simultaneamente, usando dois frames diferentes do mesmo DS9).
+
+
+ver 2.0, Bednarski e Moser
+---------------------------
+1. ccdrap.cl (Moser e Bednarski)
+
+  a. jun2014: O IRAF 2.16 não aceita mais * como indicador para output de rotinas como referência ao * no parâmetro de entrada. Implementei as modificações do Moser sobre meu ccdrap.cl de substituição dos * por listas de arquivos (@lista).
+  b. jun2014: O arquivo que guarda as coordenadas do alvo agora é independente da versão .1, .2, .3, etc. Assim, não é mais preciso mais selecionar os objetos ordinário e extraordinário várias vezes para as versões diferentes.
+  c. ago2014: Acrescentei parâmetros para entrada de um arquivo de coordenadas, caso desejado, no qual o daoedit se baseará para encontrar os feixes ordinário/extraordinário (os parâmetros novos são coordref, coord e icom). Esses parâmetros são úteis para o reduce indentificar automaticamente as coordenadas nos outros filtros a partir do primeiro, devendo apenas o usuário confirmá-las. O shell script "icom" é necessário para a entrada do daedit e seu caminho deve ser referenciado no parâmetro homônimo do ccdrap.
+  d. ago2014: Adicionei a impressão dos novos parâmetros no ccdraplog (assim como stack1st que não havia sido adicionado).
+  e. set2014: Consertei o modo interativo (intera=yes). O mesmo script "icom" do item 1.3 acima busca pela coordenada atualizada da posição de lâmina a partir da posição de lâmina anterior, ao reportar ao usuário se está certo.
+  f. mar2015: Comentei umas linhas de impressão de testes que havia esquecido há tempos.
+  g. mai2015: Coloquei critérios para calcular se um dos feixes selecionados em uma posição do CCD é perdida ao longa da redução. Isso é feito de duas maneiras: 1) As contagens dos centróides da primeira posição de lâmina são guardadas em uma variável e caso alguma das imagens de uma posição de lâmina dê contagens 10 vezes menor que essa primeira, é porque o algoritmo perdeu o alvo. Veja que isso pode ser repensado em termo das contagens de céu, pois o objeto pode praticamente sumir se houver muitas nuvens; 2) Às vezes um dos feixes é perdido e associado erroneamente a outro feixe e para isso, é verificado se para uma mesma imagem há dois feixes diferentes associados às mesmas coordenadas (observe que se há os feixes ordinário e extraordinário e, hipoteticamente, se invertam em uma imagem, o algoritmo adicionado NÃO vai reportar o ocorrido). Isso é importante porque algumas vezes a redução não é assistida pelo usuário, o que pode deixar passar uma perda nas coordenadas. Ainda não dei um "break" no laço quando um objeto é perdido, mas este é o objetivo após assegurar que a implementação está funcionando. IMPORTANTE: Ir testando nas próximas reduções antes de incorporar de vez no ccdrap.
+  h. mai2015: Acrescentei umas mudanças sobre os arquivos de coordenadas caso existentes durante uma nova rodada (pra funcionar um pouco melhor se intera==yes)
+  i. jun2015: Agora identifica as coordenadas da n posições de lâmina através das coordenadas da posição imediatamente anterior. Até então era usado como referência apenas as coordenadas da primeira posição quando intera==no. Com isso, espera-se deixar de perder as coordenadas da estrela ao longo das posições de lâmina nos casos de mau acompanhamento.
+  j. jun2015: Consertei para excluir arquivos espúrios de rodadas anteriores no início do código.
+  k. jun2015: Corrigi um bug: o caminho para o dark e o valor de darksec não estavam sendo guardados em darki e darkseci!
+  
+
+2. reduce.cl (Bednarski)
+
+  a.  ago2014: Adicionei ganho e ruído de leitura como parâmetros do reduce.
+  b.  ago2014: Adicionei o rootin como parâmetro obrigatório.
+  c.  ago2014: Adicionei parâmetro para rodar grafpol.py e gerar todas modulações .png. O caminho para o código também é um parâmetro.
+  d.  ago2014: Adicionei para executar o polrap em agupamentos de 8 posições de lâmina sempre (além do agrupamento de n posições)
+  e.  ago2014: Adicionei ifs para o sufixo funcionar tanto antes quanto depois do filtro: ex, funciona para dsco_b_g1_0001 e dsco_g1_b_0001.
+  f.  ago2014: Adicionei parâmetro para ler ganho e ruído de leitura dos cabeçalhos se desejado, já que estes vêm sendo guardados nos headers.
+  g.  ago2014: Adicionei três linhas com pccdgen.wavetyp="half", pccdgen.calc="c" e pccdgen.retar=180. pra segurança na redução.
+  h.  ago2014: Resumi o código em um laço sobre o array filter={"u","b","v","r","i"} ao invés do mesmo bloco quintuplicado (para cada filtro).
+  i.  ago2014: Modifiquei para imprimir as reduções de sucesso/erros ao final do reduce.
+  j. ago2014: Acrescentei ifs para preencher utilizar coord e coordref do ccdrap e identificar automaticamente ordinário/extraordinário após uma primeira rodada no primeiro filtro. Parâmetro usecoords determina se o ccdrap vai ser chamado dessa maneira a partir do reduce.
+  k. ago2014: Adicionei parâmetro para o caminho ao diretório calib. Útil quando usando calibrações de outras noites.
+  l. mar2015: Agora RENOMEIA os .fits quando a ordem estiver inversa entre filtro e sufixo (complemento ao item 2.5).
+  m. mar2015: Mensagens de erro quando não encontra os arquivos .e executáveis.
+  n. mar2015: Adicionei parâmetro "pccdpath" pra indicar o caminho ao diretório pccd.
+  o. mar2015: Mensagens de erro quando não encontra os campos RDNOISE e GAIN no cabeçalho.
+  p. mai2015: Adicionei campo para o parâmetro "reject". Além disso, verifica se o valor é compatível com as configurações de CCD, bin e modo CON/EM nos headers. Se não, aborta a redução.
+  q. jun2015: coloquei de volta rootin como parâmetro NÃO obrigatório
+  r. jun2015: agora deleta arquivos espúrios no início da rodada
+  s. jun2015: fundi o grafrap novo, que utiliza o pyhdust.poltools (ver item 7)
+  t. jun2015: exclui arquivos espúrios de rodadas anteriores no início do código.
+
+
+3. logpol.cl (Bednarski)
+
+  a. out2014: Criei essa rotina para gerar os arquivos de log, a menos do .out, que deverá ser preenchido a mão.
+  b. out2014: Ainda necessita de testes para verificar se está tudo certo, além de aperfeiçoamentes.
+
+
+4. beacon.cl (Bednarski)
+
+  a. jun2014: Adicionei o novo script logpol.cl
+
+
+5. calib.cl (Bednarski)
+
+  a. mar2015: Deleta arquivos "avg" da rodada anterior caso exista no diretório calib.
+  b. mar2015: Funciona tanto para arquivos nomeados na ordem _filtro_suf_ quanto na ordem _suf_filtro_.
+  c. mar2015: Agora combina todos os flats cúbicos encontrados com o mesmo sufixo. Por exemplo, se houver flat_b_001.fits e flat_b_002.fits, vai combinar os fits de cada série no avg_flat_b.fits final.
+
+
+6. pccdgen.cl (Bednarski)
+
+  a. mar2015: Mudei fileexe default para outro endereço (arquivo para caminho do pccd2000gen05.mac.e).
+
+
+7. grafpol.py (Bednarski)
+
+  a. jun2015: Reescrevi o grafpol para usar como base a tarefa pyhdust.poltools.grafpol.
+  b. jun2015: Aceita dois parâmetros de entrada (OPCIONAIS): 1) o caminho para o diretório onde estão os .log a serem plotados (se não determinado, supões '.'); 2) o sufixo dos .log iniciado com o caractere '_' (se não determinado, vai gerar o gráfico para todos sufixos).
+  
+8. reduce_spec.cl (Moser)
+
+  a. mar2016: Resize=no
