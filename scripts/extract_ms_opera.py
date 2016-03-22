@@ -10,7 +10,6 @@ import os
 from glob import glob
 import numpy as np
 import pyhdust.spectools as spt
-import pyhdust.phc as phc
 from scipy import interpolate
 import matplotlib.pyplot as plt
 from scipy.signal import savgol_filter
@@ -65,7 +64,8 @@ for sp in opsps:
     ax.plot(spec[:, 5], spec[:, 10], label='Leg.')
     # ax.set_title('Title')
     # ax.legend()
-    phc.savefig(fig, figname=sp.replace('.spc.gz', '_ori'))
+    plt.savefig(sp.replace('.spc.gz', '_ori'))
+    plt.close(fig)
 
     # i = 0
     onorm = []
@@ -89,14 +89,15 @@ for sp in opsps:
     fig, ax = plt.subplots()
     ax = plot_orders(ax, fwl, oflx, 'o')
     ax = plot_orders(ax, fwl, ocont, '-')
-    phc.savefig(fig, figname=sp.replace('.spc.gz', '.orders'))
+    plt.savefig(sp.replace('.spc.gz', '.orders'))
+    plt.close(fig)
 
     swl, sflx = spt.sum_ec(fwl, oflx)
     swl, scont = spt.sum_ec(fwl, ocont)
     swl, snorm = spt.sum_ec(fwl, onorm)
 
     avgspecs.append(sp.replace('.spc.gz', '.rv.fits'))
-    nans, x = phc.nan_helper(scont)
+    nans, x = (np.isnan(scont), lambda z: z.nonzero()[0])
     sflx[nans] = 1.
     scont[nans] = 1.
     idx = np.where(scont <= 1e-3)
@@ -115,7 +116,8 @@ for sp in opsps:
     fig, ax = plt.subplots()
     ax.plot(swl, final)
     ax.set_ylim([0, 3])
-    phc.savefig(fig, figname=sp.replace('.spc.gz', ''))
+    plt.savefig(figname=sp.replace('.spc.gz', ''))
+    plt.close(fig)
 
 if os.path.exists('tmp.txt'):
     os.system('rm tmp.txt')
