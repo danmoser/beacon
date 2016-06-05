@@ -3,6 +3,14 @@ Pacote IRAF Beacon-reduc
 Log das modificações das tarefas
 ==================================
 
+ver 2.1.5, Moser
+-----------------
+1. Atualizado ``scripts/extract_ms_iraf.py``
+
+2. Criado ``scripts/shift_spec.py``
+
+3. Atualizado o *README*, com informações para instalação.
+
 ver 2.1.4, Moser
 -----------------
 1. Todos os caminhos que apontavam para `/iraf/iraf-v2.16/` foram substituídos por `iraf$`

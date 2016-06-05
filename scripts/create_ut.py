@@ -35,6 +35,11 @@ if __name__ == '__main__':
             print('# {0} updated with UT!'.format(fn))
         elif 'DATE-OBS' not in f[0].header:
             print('# ERROR! DATE-OBS not in header of {0}'.format(fn))
+            if 'DATE' in f[0].header and 'UT' not in f[0].header:
+                ldate, hms = f[0].header['DATE'].split('T')
+                f[0].header['UT'] = hms
+                f.flush()
+                print('# {0} updated with UT!'.format(fn))                
         else:
             print('# {0} already contains UT info.'.format(fn))
         f.close()

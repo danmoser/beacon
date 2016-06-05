@@ -1,8 +1,8 @@
 # Sun 13:41:41 18-Jan-2015
-begin	ecidentify avg_lamp_b.ms
-	id	avg_lamp_b.ms
+begin	ecidentify avg_lamp_a.ms
+	id	avg_lamp_a.ms
 	task	ecidentify
-	image	avg_lamp_b.ms
+	image	avg_lamp_a.ms
 	units	angstroms
 	features	263
 		  1   95   372.94  5975.13396   5975.0648   4.0  1  1

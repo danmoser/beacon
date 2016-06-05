@@ -1,14 +1,14 @@
 #!/usr/bin/env python
 # -*- coding:utf-8 -*-
 
-"""
-Program to normalize spectra from IRAF Echelle format based on derivative 
-variations.
+""" Program to normalize spectra from IRAF Echelle format (*.ms.cal.fits) based 
+on spectrum derivative variations.
 """
 
 import os
 from glob import glob
 import numpy as np
+import sys
 # import pyhdust.spectools as spt
 # import pyhdust.phc as phc
 from scipy import interpolate
@@ -17,6 +17,34 @@ from scipy.signal import savgol_filter
 import specutils.io as sio
 import pyfits
 import datetime as dt
+from argparse import ArgumentParser
+
+__version__ = "0.9"
+__author__ = "Daniel Moser"
+__email__ = "dmfaes@gmail.com"
+
+
+class MyParser(ArgumentParser): 
+    def error(self, message):
+        sys.stderr.write('# Error: %s\n' % message)
+        self.print_help()
+        sys.exit(2)
+
+
+parser = MyParser(description=__doc__)
+parser.add_argument('--version', action='version', 
+    version='%(prog)s {0}'.format(__version__))
+# parser.add_argument("INPUT", help=("String to retrive the spectrum(a) "
+#     "filename(s) (wildcards accepted)"))
+# parser.add_argument("-l", "--line", action="store", dest="line", 
+#     help=("Wavelength of the reference line [default: %(default)s]"), 
+#     type=float, default=6562.79)
+parser.add_argument("-F", "--fig-fmt", action="store", dest="fig_fmt", 
+    help=("Format of the output figures [default: %(default)s]"), 
+    type=str, default="png")
+
+
+args = parser.parse_args()
 
 
 def dtflag():
@@ -203,7 +231,7 @@ if __name__ == '__main__':
         fig, ax = plt.subplots()
         ax = plot_orders(ax, fwl, oflx, 'o')
         ax = plot_orders(ax, fwl, ocont, '-')
-        plt.savefig(sp.replace('.fits', '.orders'))
+        plt.savefig(sp.replace('.fits', '.orders.{0}'.format(args.fig_fmt)))
 
         swl, sflx = sum_ec(fwl, oflx)
         swl, scont = sum_ec(fwl, ocont)
@@ -228,7 +256,11 @@ if __name__ == '__main__':
         fig, ax = plt.subplots()
         ax.plot(swl, final)
         ax.set_ylim([0, 3])
-        plt.savefig(sp.replace('.fits', ''))
+        plt.savefig(sp.replace('.fits', '.{0}'.format(args.fig_fmt)))
+
+        ax.set_xlim([6540, 6585])
+        ax.set_ylim([0.5, 2.0])
+        plt.savefig(sp.replace('.fits', 'halpha.{0}'.format(args.fig_fmt)))
         plt.close(fig)
 
     # if os.path.exists('tmp.txt'):
