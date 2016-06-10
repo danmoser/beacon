@@ -1,16 +1,20 @@
 beacon-reduc
-#############
+==============
 
-IRAF tools for polarimetry and spectroscopy from the BeACoN group
+IRAF tools for polarimetry and spectroscopy from the `BeACoN group <http://beacon.iag.usp.br/>`_.
 
-http://beacon.iag.usp.br/
+About the instruments in this pipeline:
+
+- `MUSICOS <http://www.lna.br/opd/instrum/musicos.html>`_
+- `Cassegrain spectograph <http://www.lna.br/opd/instrum/instr.html>`_
+- `IAGPOL polarimeter <http://www.astro.iag.usp.br/~polarimetria/gaveta/english.htm>`_
 
 Installation
-===============
+--------------
 The suggestion is to install the package as an symbolic link. Then add it to 
 the extern packages of IRAF, add the its scripts to the path:
 
-.. code-bash::
+.. code:: bash
 
     ln -s /path/to/beacon /path/Ureka/iraf/extern/beacon
     

@@ -30,7 +30,6 @@ class MyParser(ArgumentParser):
         self.print_help()
         sys.exit(2)
 
-
 parser = MyParser(description=__doc__)
 parser.add_argument('--version', action='version', 
     version='%(prog)s {0}'.format(__version__))
@@ -42,7 +41,6 @@ parser.add_argument('--version', action='version',
 parser.add_argument("-F", "--fig-fmt", action="store", dest="fig_fmt", 
     help=("Format of the output figures [default: %(default)s]"), 
     type=str, default="png")
-
 
 args = parser.parse_args()
 
