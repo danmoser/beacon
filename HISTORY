@@ -7,7 +7,7 @@ ver 2.1.5, Moser
 -----------------
 1. Atualizado ``scripts/extract_ms_iraf.py``
 
-2. Criado ``scripts/shift_spec.py``
+2. Movido os scripts não-dependentes de instrumento (como o ``shift_spec.py`` para o ``pyhdust``)
 
 3. Atualizado o *README*, com informações para instalação.
 

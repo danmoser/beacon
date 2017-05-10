@@ -1,6 +1,10 @@
 #!/usr/bin/env python
 # -*- coding:utf-8 -*-
 
+""" Adds information in MUSICOS observation FITS file to the OPERA reduction.
+    New keywords: MJD-OBS, MODDATA, DEC_DEG, RA_DEG, INSTMODE, EXPTIME2, 
+    OBSTYPE, READTIME
+"""
 from optparse import OptionParser
 from glob import glob
 import sys
@@ -8,11 +12,7 @@ import numpy as np
 import pyfits as pf
 import jdcal
 
-""" Adds information in MUSICOS observation FITS file to the OPERA reduction.
-    New keywords: MJD-OBS, MODDATA, DEC_DEG, RA_DEG, INSTMODE, EXPTIME2, 
-    OBSTYPE, READTIME
-"""
-
+__version__ = "0.9"
 __author__ = "Daniel Moser"
 __email__ = "dmfaes@gmail.com"
 

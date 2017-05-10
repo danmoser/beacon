@@ -25,7 +25,7 @@ from sys import argv
 
 try:
     import pyhdust.poltools as polt
-except:
+except ImportError:
     print('# ERROR: pyhdust package not installed!')
     raise SystemExit(1)
 

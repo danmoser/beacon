@@ -2,12 +2,16 @@
 # -*- coding:utf-8 -*-
 
 """ Program to add the *UT* entry the in fits header. It requires the 
-*DATE-OBS* entry. """
-
+*DATE-OBS* entry. 
+"""
 import pyfits as pf
 from glob import glob
 import numpy as np
 import jdcal
+
+__version__ = "0.9"
+__author__ = "Daniel Moser"
+__email__ = "dmfaes@gmail.com"
 
 
 def hms2fracday(hms):

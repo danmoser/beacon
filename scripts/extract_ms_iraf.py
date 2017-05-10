@@ -4,7 +4,6 @@
 """ Program to normalize spectra from IRAF Echelle format (*.ms.cal.fits) based 
 on spectrum derivative variations.
 """
-
 import os
 from glob import glob
 import numpy as np
